@@ -63,7 +63,8 @@ body {
   background: var(--brass); color: #1a0d06; border-radius: 10px;
   font-size: 19px; line-height: 1; font-weight: 700;
 }
-.brand-name { font-family: var(--display); font-weight: 700; font-size: 1.06rem; letter-spacing: -.02em; white-space: nowrap; }
+.brand-name { font-family: var(--display); font-weight: 700; font-size: 1.06rem; letter-spacing: -.02em; white-space: nowrap; color: var(--ink); }
+.brand-name em { font-style: normal; color: var(--brass); }
 /* signature: five staff hairlines running under the wordmark */
 .brand::after {
   content: ""; position: absolute; left: 10px; right: 10px; bottom: 8px; height: 9px; opacity: .5;
@@ -84,6 +85,20 @@ body {
   background: var(--line); transition: background .15s, box-shadow .15s;
 }
 .side-item.active .side-dot { background: var(--brass); box-shadow: 0 0 0 3px rgba(255,122,69,.18); }
+.side-footer { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); }
+.side-top { padding-bottom: 8px; margin-bottom: 4px; border-bottom: 1px solid var(--line); }
+.side-footer-btn, .side-top-btn { padding-left: 12px; }
+.side-footer-btn .side-dot, .side-top-btn .side-dot { display: none; }
+.nav-menu-footer { border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; }
+.info-modal { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 22px; background: rgba(13,14,18,.86); backdrop-filter: blur(3px); }
+.info-modal[hidden] { display: none; }
+.info-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 26px 64px -22px #000; padding: 20px 22px; max-width: 420px; width: 100%; animation: rise .35s ease-out; }
+.info-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; }
+.info-head h2 { font-family: var(--display); font-size: 1.25rem; color: var(--ink); margin: 0; }
+.info-card p { color: var(--ink-dim); font-size: .92rem; line-height: 1.55; margin: 0 0 12px; }
+.info-card p:last-child { margin-bottom: 0; }
+.info-card a { color: var(--brass); text-decoration: underline; text-underline-offset: 3px; }
+.info-card a:hover { color: var(--ink); }
 
 .wrap { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: clamp(16px, 4vw, 36px) clamp(14px, 4vw, 32px) 60px; }
 
@@ -95,6 +110,14 @@ body {
   font-size: clamp(1.5rem, 5vw, 1.9rem); line-height: 1.05; letter-spacing: -.03em; color: var(--ink);
 }
 .mast h1 em { font-style: normal; color: var(--brass); }
+.mast-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; width: 100%; padding-right: clamp(64px, 18vw, 80px); }
+.mast-links { display: flex; gap: 6px; flex-wrap: wrap; }
+.mast-link {
+  font-family: var(--ui); font-size: .76rem; font-weight: 600; color: var(--ink-dim);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 6px 12px; cursor: pointer; transition: color .15s, border-color .15s;
+}
+.mast-link:hover { color: var(--brass); border-color: rgba(255,122,69,.4); }
 .mast .rule { display: none; }
 .mast p { color: var(--muted); font-family: var(--ui); font-size: .82rem; max-width: 60ch; margin: 0; }
 @media (max-width: 640px) { .mast p { display: none; } }
@@ -282,6 +305,20 @@ footer span { color: var(--brass); }
 
 .learn-nav { display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 780px) { .learn-nav { position: sticky; top: 14px; max-height: calc(100vh - 28px); overflow-y: auto; padding-right: 4px; } }
+.learn-nav-wrap { position: relative; }
+.learn-nav-toggle {
+  display: none; align-items: center; gap: 12px; width: 100%;
+  font-family: var(--ui); font-weight: 600; font-size: .95rem; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; cursor: pointer; box-shadow: var(--shadow); text-align: left;
+}
+.learn-nav-bars { display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 22px; flex: none; }
+.learn-nav-bars span { display: block; height: 2px; background: var(--ink-dim); border-radius: 2px; }
+.learn-nav-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.learn-nav-wrap.open .learn-nav-bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.learn-nav-wrap.open .learn-nav-bars span:nth-child(2) { opacity: 0; }
+.learn-nav-wrap.open .learn-nav-bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.learn-nav-bars span { transition: transform .2s, opacity .2s; }
 .lmod { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px 6px; }
 .lmod-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; width: 100%; font-family: var(--display); font-weight: 600; font-size: 1.02rem; color: var(--ink); background: transparent; border: 0; border-radius: 9px; padding: 11px 10px; cursor: pointer; text-align: left; }
 .lmod-head:hover { background: var(--surface-2); }
@@ -1044,9 +1081,15 @@ footer span { color: var(--brass); }
   .stab.active { color: var(--brass); background: rgba(255,122,69,.13); border-color: rgba(255,122,69,.4); }
 }
 
-/* Learn: one tidy grouped list instead of nine stacked cards */
+/* Learn: collapsible hamburger menu on mobile/tablet */
 @media (max-width: 779px) {
-  .learn-nav { gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .learn-nav-toggle { display: flex; }
+  .learn-nav-wrap .learn-nav {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 55;
+    max-height: min(70vh, 520px); overflow-y: auto; box-shadow: var(--shadow);
+    gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow-x: hidden;
+  }
+  .learn-nav-wrap.open .learn-nav { display: flex; }
   .lmod { background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 0; }
   .lmod:last-child { border-bottom: 0; }
   .lmod-head { font-size: 1rem; padding: 16px; border-radius: 0; }
@@ -4080,7 +4123,18 @@ footer span { color: var(--brass); }
   function openLesson(mi, ti) {
     const idx = FLAT.findIndex((f) => f.mi === mi && f.ti === ti);
     showLesson(idx);
+    closeLearnNav();
     const pane = $("lessonPane"); if (pane && pane.scrollIntoView) pane.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function closeLearnNav() {
+    const wrap = $("learnNavWrap"), toggle = $("learnNavToggle");
+    if (wrap) wrap.classList.remove("open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
+  function updateLearnNavLabel() {
+    const lbl = $("learnNavLabel"); if (!lbl || lessonIdx == null) return;
+    const f = FLAT[lessonIdx];
+    lbl.textContent = f ? f.module.title : "Lessons";
   }
   // ---------- Lesson transposition ----------
   let lessonTranspose = 0; // semitones, -6..+6
@@ -4267,6 +4321,7 @@ footer span { color: var(--brass); }
     if (mods[f.mi]) mods[f.mi].classList.add("open");
     document.querySelectorAll(".ltopic").forEach((b, i) => b.classList.toggle("active", i === lessonIdx));
     $("lessonPane").hidden = false;
+    updateLearnNavLabel();
   }
   function renderLessonBody(topic) {
     const body = $("lessonBody"); body.innerHTML = ""; exampleDraws = [];
@@ -4350,6 +4405,22 @@ footer span { color: var(--brass); }
       head.addEventListener("click", () => { const wasOpen = acc.classList.contains("open"); menu.querySelectorAll(".nav-acc.open").forEach((a) => a.classList.remove("open")); if (!wasOpen) acc.classList.add("open"); });
       acc.appendChild(head); acc.appendChild(body); menu.appendChild(acc);
     });
+    const foot = document.createElement("div"); foot.className = "nav-menu-footer";
+    [["about", "About"], ["donate", "Donations"]].forEach(([action, label]) => {
+      const item = document.createElement("button"); item.type = "button"; item.className = "nav-acc-item"; item.dataset.action = action;
+      item.textContent = label;
+      item.addEventListener("click", () => { openInfoModal(action); closeNavMenu(); });
+      foot.appendChild(item);
+    });
+    menu.appendChild(foot);
+  }
+  function openInfoModal(which) {
+    const id = which === "about" ? "aboutModal" : "donateModal";
+    const el = $(id); if (el) el.hidden = false;
+  }
+  function closeInfoModal(which) {
+    const id = which === "about" ? "aboutModal" : "donateModal";
+    const el = $(id); if (el) el.hidden = true;
   }
   function closeNavMenu() {
     const m = $("navMenu"), t = $("navToggle");
@@ -4419,6 +4490,7 @@ footer span { color: var(--brass); }
     document.querySelectorAll(".stab").forEach((t) => t.classList.toggle("active", t.dataset.sec === sec));
     if (GROUPS.practice.indexOf(sec) >= 0) lastPractice = sec;
     const show = (id) => { ["practiceView", "learnView", "gameView", "toolsView", "scalesView", "rsheetView", "melsheetView", "leadsheetView", "jazzsheetView"].forEach((v) => { $(v).hidden = (v !== id); }); };
+    if (sec !== "learn") closeLearnNav();
     if (sec === "learn") {
       stopTimed(); show("learnView");
       if (!learnInited) { renderLearnNav(); showLesson(0); learnInited = true; }
@@ -6514,6 +6586,21 @@ footer span { color: var(--brass); }
     if (T.setSimplify) T.setSimplify(state.simplify);
     document.querySelectorAll(".ptab").forEach((t) => t.addEventListener("click", () => setGroup(t.dataset.group)));
     buildNavMenu();
+    document.querySelectorAll(".side-top [data-action], .mast-links [data-action]").forEach((b) => b.addEventListener("click", () => openInfoModal(b.dataset.action)));
+    if ($("learnNavToggle")) $("learnNavToggle").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wrap = $("learnNavWrap"); const opening = !wrap.classList.contains("open");
+      wrap.classList.toggle("open", opening);
+      $("learnNavToggle").setAttribute("aria-expanded", opening ? "true" : "false");
+    });
+    document.addEventListener("click", (e) => {
+      const wrap = $("learnNavWrap");
+      if (wrap && wrap.classList.contains("open") && !wrap.contains(e.target)) closeLearnNav();
+    });
+    $("aboutClose").addEventListener("click", () => closeInfoModal("about"));
+    $("donateClose").addEventListener("click", () => closeInfoModal("donate"));
+    $("aboutModal").addEventListener("click", (e) => { if (e.target === $("aboutModal")) closeInfoModal("about"); });
+    $("donateModal").addEventListener("click", (e) => { if (e.target === $("donateModal")) closeInfoModal("donate"); });
     $("navToggle").addEventListener("click", () => {
       const m = $("navMenu"); const opening = m.hidden;
       m.hidden = !opening; m.classList.toggle("open", opening);
@@ -6763,6 +6850,11 @@ footer span { color: var(--brass); }
     "Theory": "Teor\u00EDa", "Keys": "Tonalidades", "Jazz": "Jazz", "Ear": "O\u00EDdo",
     "Note Runner": "Carrera de Notas", "Guitar Chords": "Acordes de Guitarra",
     "Scale Explorer": "Explorador de Escalas", "Rhythm Sheets": "Hojas de Ritmo", "Games": "Juegos",
+    // About / donations
+    "About": "Acerca de", "Donations": "Donaciones",
+    "If you would like to support this project, you can donate via PayPal or ATH M\u00F3vil.": "Si deseas apoyar este proyecto, puedes donar por PayPal o ATH M\u00F3vil.",
+    "Donate with PayPal": "Donar con PayPal",
+    "Donate via ATH M\u00F3vil: 787-368-2326": "Donar por ATH M\u00F3vil: 787-368-2326",
     // Practice controls
     "Difficulty": "Dificultad", "Exercise": "Ejercicio", "Mode": "Modo", "Answer with": "Responder con",
     "Double sharps / flats": "Dobles sostenidos / bemoles", "Buttons": "Botones", "Piano": "Piano",
@@ -6875,8 +6967,17 @@ footer span { color: var(--brass); }
   try { if (typeof localStorage !== "undefined" && localStorage.getItem("cs_lang") === "es") LANG = "es"; } catch (e) {}
   const _origText = (typeof WeakMap !== "undefined") ? new WeakMap() : null;
   function _lookup(s) { return Object.prototype.hasOwnProperty.call(I18N_ES, s) ? I18N_ES[s] : null; }
+  function _notranslate(tn) {
+    let el = tn.parentElement;
+    while (el) {
+      if (el.classList && el.classList.contains("notranslate")) return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
   function translateNode(tn) {
     if (!tn || tn.nodeType !== 3) return;
+    if (_notranslate(tn)) return;
     const raw = tn.nodeValue; if (raw == null) return;
     if (LANG === "es") {
       const src = (_origText && _origText.has(tn)) ? _origText.get(tn) : raw;
@@ -7030,9 +7131,13 @@ footer span { color: var(--brass); }
 <body>
 <div class="app">
   <aside class="sidebar" id="sidebar" aria-label="Sections">
-    <div class="brand">
+    <div class="brand notranslate">
       <span class="brand-mark">&#9834;</span>
-      <span class="brand-name">Clef &amp; Staff</span>
+      <span class="brand-name">Clef &amp; <em>Staff</em></span>
+    </div>
+    <div class="side-top">
+      <button type="button" class="side-item side-top-btn" data-action="about"><span>About</span></button>
+      <button type="button" class="side-item side-top-btn" data-action="donate"><span>Donations</span></button>
     </div>
     <div class="lang-switch" id="langSwitch">
       <button type="button" class="lang-btn active" data-lang="en">EN</button>
@@ -7048,7 +7153,13 @@ footer span { color: var(--brass); }
       <button type="button" class="lang-btn" data-lang="es">ES</button>
     </div>
     <div class="eyebrow">Learn &middot; Practice &middot; Improvise</div>
-    <h1>Clef &amp; <em>Staff</em></h1>
+    <div class="mast-head">
+      <h1 class="notranslate">Clef &amp; <em>Staff</em></h1>
+      <div class="mast-links">
+        <button type="button" class="mast-link" data-action="about">About</button>
+        <button type="button" class="mast-link" data-action="donate">Donations</button>
+      </div>
+    </div>
     <div class="rule"></div>
     <p>A complete platform for learning music — guided lessons with audio, plus endlessly generated exercises in theory, sight-reading, ear-training and jazz, with notation engraved correctly every time.</p>
   </header>
@@ -7170,7 +7281,13 @@ footer span { color: var(--brass); }
   <!-- ===================== LEARN VIEW ===================== -->
   <div id="learnView" hidden>
     <div class="learn-grid">
-      <aside class="learn-nav" id="learnModules" aria-label="Lessons"></aside>
+      <div class="learn-nav-wrap" id="learnNavWrap">
+        <button class="learn-nav-toggle" id="learnNavToggle" type="button" aria-label="Lesson menu" aria-expanded="false" aria-controls="learnModules">
+          <span class="learn-nav-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="learn-nav-label" id="learnNavLabel">Lessons</span>
+        </button>
+        <aside class="learn-nav" id="learnModules" aria-label="Lessons"></aside>
+      </div>
       <article class="lesson" id="lessonPane" hidden>
         <div class="lesson-top">
           <div class="lesson-module" id="lessonModule"></div>
@@ -7836,6 +7953,28 @@ footer span { color: var(--brass); }
     <div class="tuner-freq" id="tunerFreq"></div>
     <div class="metro-actions"><button class="btn btn-start" id="tunerStart" type="button">Start tuner</button></div>
     <div class="tuner-hint" id="tunerHint">Allow microphone access to tune by ear.</div>
+  </div>
+</div>
+
+<div class="info-modal" id="aboutModal" hidden>
+  <div class="info-card" role="dialog" aria-labelledby="aboutTitle">
+    <div class="info-head">
+      <h2 id="aboutTitle">About</h2>
+      <button class="metro-close" id="aboutClose" type="button" aria-label="Close">&times;</button>
+    </div>
+    <p>A complete platform for learning music — guided lessons with audio, plus endlessly generated exercises in theory, sight-reading, ear-training and jazz, with notation engraved correctly every time.</p>
+  </div>
+</div>
+
+<div class="info-modal" id="donateModal" hidden>
+  <div class="info-card" role="dialog" aria-labelledby="donateTitle">
+    <div class="info-head">
+      <h2 id="donateTitle">Donations</h2>
+      <button class="metro-close" id="donateClose" type="button" aria-label="Close">&times;</button>
+    </div>
+    <p>If you would like to support this project, you can donate via PayPal or ATH Móvil.</p>
+    <p><a href="https://paypal.me/SamuelOGonzalez?locale.x=en_US&amp;country.x=US" target="_blank" rel="noopener noreferrer">Donate with PayPal</a></p>
+    <p>Donate via ATH Móvil: 787-368-2326</p>
   </div>
 </div>
 
